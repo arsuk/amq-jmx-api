@@ -1,0 +1,5 @@
+#!/bin/bash
+CD=$(pwd)
+cd /opt/apache-activemq-*
+./bin/activemq $1 $2 $3
+cd $CD

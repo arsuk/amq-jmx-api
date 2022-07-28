@@ -1,0 +1,1 @@
+cp target/amq-jmx-api-1.1-SNAPSHOT-shaded.jar ~/bin/amq-jmx-api-1.1.jar

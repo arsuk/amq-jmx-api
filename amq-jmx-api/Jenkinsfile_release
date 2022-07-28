@@ -1,0 +1,32 @@
+node('jdk8') {
+    // define commands
+    def mvnHome
+    def mvnCmd
+
+    stage('Preparation') {
+        git credentialsId: 'eWL-AP-EPP-SPS', branch: 'release', url: 'https://gitlab.kazan.atosworldline.com/ap-payments-nonfunctional-testing/amq-jmx-api.git'
+        mvnHome = tool 'Maven 3.5.x'
+        mvnCmd = "${mvnHome}/bin/mvn"
+    }
+    stage('Prepare release') {
+        configFileProvider([configFile(fileId: 'MavenGlobalInternalzoneNexus', variable: 'MAVEN_SETTINGS'), configFile(fileId: 'MavenToolchainsDefault', variable: 'MAVEN_TOOLCHAINS')]) {
+            withEnv(['JAVA_HOME=D:/Java/current']) {
+	            bat "${mvnCmd} -s $MAVEN_SETTINGS -t $MAVEN_TOOLCHAINS release:prepare -DautoVersionsSubmodules -B"
+	        }
+		}
+    }
+    stage('Perform release') {
+        configFileProvider([configFile(fileId: 'MavenGlobalInternalzoneNexus', variable: 'MAVEN_SETTINGS'), configFile(fileId: 'MavenToolchainsDefault', variable: 'MAVEN_TOOLCHAINS')]) {
+            withEnv(['JAVA_HOME=D:/Java/current']) {
+	            bat "${mvnCmd} -s $MAVEN_SETTINGS -t $MAVEN_TOOLCHAINS release:perform -DautoVersionsSubmodules -B"
+	        }
+		}
+    }
+    stage('Cleanup after build') {
+        configFileProvider([configFile(fileId: 'MavenGlobalInternalzoneNexus', variable: 'MAVEN_SETTINGS'), configFile(fileId: 'MavenToolchainsDefault', variable: 'MAVEN_TOOLCHAINS')]) {
+            withEnv(['JAVA_HOME=D:/Java/current']) {
+	            bat "${mvnCmd} -s $MAVEN_SETTINGS -t $MAVEN_TOOLCHAINS clean -B"
+	        }
+		}
+    }
+}

@@ -1,0 +1,107 @@
+﻿JMX (port 1099)
+
+jconsole
+jvisualvm
+
+
+ActiveMQ REST interface
+
+Up to ActiveMQ 5.11 the url was http://localhost:8181/hawtio/jolokia/ now use the following:
+
+curl -u admin http://localhost:8161/api/jolokia/ && echo ""
+
+To get memory usage with GET:
+
+http://localhost:8161/api/jolokia/read/java.lang:type=Memory/HeapMemoryUsage
+
+You can access specific parts of the JMX tree by passing a JSON request with POST through that acts a a query parameter. For example to access the heap memory usage of the JVM you would pass in:
+
+{
+    "type":"read",
+    "mbean":"java.lang:type=Memory",
+    "attribute":"HeapMemoryUsage",
+    "path":"used"
+}
+
+Here’s the escaped curl request:
+
+$ curl -u admin -d "{\"type\":\"read\",\"mbean\":\"java.lang:type=Memory\",\"attribute\":\"HeapMemoryUsage\",\"path\":\"used\"}" http://localhost:8161/api/jolokia/ && echo ""
+
+And here’s the response:
+
+{
+    "timestamp":1384811291,
+    "status":200,
+    "request":{
+        "mbean":"java.lang:type=Memory",
+        "path":"used",
+        "attribute":"HeapMemoryUsage",
+        "type":"read"
+    },
+    "value":224135568
+}
+
+
+We can also use this to access the really juicy, interesting ActiveMQ stats. Here we’ll grab the broker’s MemoryPercentUsage. You can locate the path you are interested in via jvisualvm/jconsole:
+ActiveMQ JMX MemoryPercentUsage
+
+Hunting through the JMX tree…
+
+Here’s our formatted JSON payload for the query:
+
+{
+    "type":"read",
+    "mbean":"org.apache.activemq:type=Broker,brokerName=localhost",
+    "attribute":"MemoryPercentUsage"
+}
+
+Here’s the escaped curl request:
+
+$ curl -u admin -d "{\"type\":\"read\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"attribute\":\"MemoryPercentUsage\"}" http://localhost:8161/api/jolokia/ && echo ""
+
+And here’s the response:
+
+{
+    "timestamp":1384811228,
+    "status":200,
+    "request":{
+        "mbean":"org.apache.activemq:brokerName=localhost,type=Broker",
+        "attribute":"MemoryPercentUsage",
+        "type":"read"
+    },
+    "value":0
+}
+
+Accessing a queue Mbean (all attributes):
+
+curl -u admin -d "{\"type\":\"read\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName=example/myQueue\"}" http://localhost:8161/api/jolokia/ && echo ""
+
+And with GET:
+http://localhost:8161/api/jolokia/read/org.apache.activemq:type=Broker,brokerName=sam,destinationType=Queue,destinationName=example!/myQueue
+
+Accessing a queue (Name attribute):
+
+curl -u admin -d "{\"type\":\"read\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName=example/myQueue\",\"attribute\":\"Name\"}" http://localhost:8161/api/jolokia/ && echo ""
+
+{
+    "type":"read",
+    "mbean":"org.apache.activemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName=example/myQueue",
+    "attribute":"Name"
+}
+
+List of queues:
+
+curl -u admin -d "{\"type\":\"read\",\"mbean\":\"org.apache.activemq:type=Broker,brokerName=localhost\",\"attribute\":\"Queues\"}" http://localhost:8161/api/jolokia/ && echo ""
+
+{
+    "type":"read",
+    "mbean":"org.apache.activemq:type=Broker,brokerName=localhost",
+    "attribute":"Queues"
+}
+
+Execute an operation
+
+For example reset queue statistics:
+
+http://localhost:8161/api/jolokia/exec/org.apache.activemq:type=Broker,brokerName=sam,destinationType=Queue,destinationName=example!/myQueue/resetStatistics
+

@@ -1,0 +1,136 @@
+{
+   "request":{
+      "mbean":"org.apache.activemq:brokerName=localhost,type=Broker",
+      "type":"read"
+   },
+   "value":{
+      "StatisticsEnabled":true,
+      "TemporaryQueueSubscribers":[
+
+      ],
+      "TotalConnectionsCount":0,
+      "TotalMessageCount":0,
+      "TempPercentUsage":0,
+      "MemoryPercentUsage":0,
+      "TransportConnectors":{
+         "openwire":"tcp:\/\/balrog:61616?maximumConnections=1000&wireFormat.maxFrameSize=104857600&wireFormat.maxInactivityDuration=1000&wireFormat.maxInactivityDurationInitalDelay=10000",
+         "amqp":"amqp:\/\/balrog:5672?maximumConnections=1000&wireFormat.maxFrameSize=104857600",
+         "mqtt":"mqtt:\/\/balrog:1883?maximumConnections=1000&wireFormat.maxFrameSize=104857600",
+         "stomp":"stomp:\/\/balrog:61613?maximumConnections=1000&wireFormat.maxFrameSize=104857600&wireFormat.maxInactivityDuration=1000",
+         "ws":"ws:\/\/balrog:61614?maximumConnections=1000&wireFormat.maxFrameSize=104857600",
+         "openwire+ssl":"ssl:\/\/balrog:61617?transport.enabledCipherSuites=SSL_RSA_WITH_RC4_128_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA&maximumConnections=1000&wireFormat.maxFrameSize=104857600"
+      },
+      "InactiveDurableTopicSubscribers":[
+
+      ],
+      "StoreLimit":100976796190,
+      "TotalProducerCount":0,
+      "TopicProducers":[
+
+      ],
+      "CurrentConnectionsCount":0,
+      "QueueProducers":[
+
+      ],
+      "JMSJobScheduler":null,
+      "VMURL":"vm:\/\/localhost",
+      "UptimeMillis":621416,
+      "TemporaryTopicProducers":[
+
+      ],
+      "TemporaryQueueProducers":[
+
+      ],
+      "TotalDequeueCount":0,
+      "Topics":[
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=myQueue.qmirror,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=-h.qmirror,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=dddd,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=transacted.client.example,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=ActiveMQ.Advisory.MasterBroker,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=instantpayments_test_queue.qmirror,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=example\/myQueue.qmirror,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=example.myQueue,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=example.myQueue.qmirror,destinationType=Topic,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=queue\/helloQueue.qmirror,destinationType=Topic,type=Broker"
+         }
+      ],
+      "DurableTopicSubscribers":[
+
+      ],
+      "JobSchedulerStorePercentUsage":0,
+      "Uptime":"10 minutes",
+      "QueueSubscribers":[
+
+      ],
+      "BrokerId":"ID:balrog-39486-1538237273280-0:1",
+      "AverageMessageSize":0,
+      "DataDirectory":"\/opt\/apache-activemq-5.14.3\/data",
+      "Persistent":true,
+      "TopicSubscribers":[
+
+      ],
+      "BrokerVersion":"5.14.3",
+      "TemporaryQueues":[
+
+      ],
+      "BrokerName":"localhost",
+      "MinMessageSize":0,
+      "MemoryLimit":668309914,
+      "Slave":false,
+      "DynamicDestinationProducers":[
+
+      ],
+      "TotalEnqueueCount":0,
+      "TempLimit":53687091200,
+      "TemporaryTopicSubscribers":[
+
+      ],
+      "TemporaryTopics":[
+
+      ],
+      "JobSchedulerStoreLimit":0,
+      "Queues":[
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=myQueue,destinationType=Queue,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=queue\/helloQueue,destinationType=Queue,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=example.myQueue,destinationType=Queue,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=instantpayments_test_queue,destinationType=Queue,type=Broker"
+         },
+         {
+            "objectName":"org.apache.activemq:brokerName=localhost,destinationName=example\/myQueue,destinationType=Queue,type=Broker"
+         }
+      ],
+      "TotalConsumerCount":0,
+      "StorePercentUsage":0,
+      "MaxMessageSize":0
+   },
+   "timestamp":1538237894,
+   "status":200
+}
+

@@ -1,0 +1,14 @@
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/amq/utils/json/MyJSONArray.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/JolokiaRequestBuilder.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/gui/GetApiVersion.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/amq/utils/json/MyJSONObject.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/amq/utils/gui/ShowTable.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/Main.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/DataTypeArtemis.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/gui/DisplayData.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/logging/LogData.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/amq/utils/MyArgs.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/logging/LogDataArtemis.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/gui/DisplayDataArtemis.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/DataType.java
+/home/allan/dev/amq-jmx-api/src/main/java/com/equensworldline/jolokia/client/JolokiaClient.java
