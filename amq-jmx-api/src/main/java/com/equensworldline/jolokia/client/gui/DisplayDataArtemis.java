@@ -16,6 +16,8 @@ import org.jolokia.client.request.J4pReadResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.equensworldline.amq.utils.MyArgs;
@@ -28,6 +30,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,6 +66,10 @@ public class DisplayDataArtemis implements Runnable {
     private boolean showStatusBool = true;
     private J4pClient j4pClient;
     private String lastError="";
+    
+    // props values
+    static boolean purgeAllowed=true;
+    static boolean resetAllowed=true;
     
     static final String endpointDefault="http://localhost:8161/console/jolokia/";
     static final String sleepSecsDefault="10";
@@ -100,6 +108,17 @@ public class DisplayDataArtemis implements Runnable {
         if (!help) help = MyArgs.arg(args, "-?");
         if (help) {
             printUsage();
+        }
+        
+        Properties properties = new Properties();
+        try {
+            properties.load(DisplayDataArtemis.class.getResourceAsStream(File.separator + "prop.properties"));
+            String purgeStr=properties.getProperty("purgeAllowed", "yes");
+            purgeAllowed=purgeStr.startsWith("y")||purgeStr.startsWith("t");
+            String resetStr=properties.getProperty("resetAllowed", "yes");
+            resetAllowed=resetStr.startsWith("y")||resetStr.startsWith("t");
+        } catch (Exception e) {
+            // ignore errors
         }
 
         thread = new Thread[endpoints.length];
@@ -906,16 +925,18 @@ public class DisplayDataArtemis implements Runnable {
                 }
             }
         };
-        JButton resetButton = new JButton("Reset statistics");
-        resetButton.addActionListener(al);
-        resetButton.setToolTipText("Reset statistics of selected items");
-        menuBar.add(resetButton);
-
-        JButton purgeButton = new JButton("Purge destination");
-        purgeButton.addActionListener(al);
-        purgeButton.setToolTipText("Purge messages of selected items");
-        menuBar.add(purgeButton);
-
+        if (resetAllowed) {
+        	JButton resetButton = new JButton("Reset statistics");
+        	resetButton.addActionListener(al);
+        	resetButton.setToolTipText("Reset statistics of selected items");
+        	menuBar.add(resetButton);
+        }
+        if (purgeAllowed) {
+        	JButton purgeButton = new JButton("Purge destination");
+        	purgeButton.addActionListener(al);
+        	purgeButton.setToolTipText("Purge messages of selected items");
+        	menuBar.add(purgeButton);
+        }
         JButton optionsButton = new JButton("Options");
         optionsButton.addActionListener(al);
         optionsButton.setToolTipText("Open screen to change the query");
