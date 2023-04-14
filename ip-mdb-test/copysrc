@@ -1,3 +1,0 @@
-cp ./src/main/java/IPTestCommand.java ../ip-mdb-test-patch/src/main/java/IPTestCommand.java
-cp ./src/main/java/WebApplication.java ../ip-mdb-test-patch/src/main/java/WebApplication.java
-
