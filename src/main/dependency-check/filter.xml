@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress>
+        <notes><![CDATA[
+        Suppress A-MQ / ActiveMQ server-side vulnerabilities for the client
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.activemq/activemq\-client@.*$</packageUrl>
+        <cve>CVE-2015-5182</cve>
+        <cve>CVE-2015-5183</cve>
+        <cve>CVE-2015-5184</cve>
+    </suppress>
+</suppressions>

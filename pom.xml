@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.equensworldline.ap-epp-sps.jms</groupId>
+    <artifactId>amq-jmx-api</artifactId>
+    <version>2.1-SNAPSHOT</version>
+
+    <name>amq-jmx-api</name>
+    <description>ActiveMQ JMX monitor using API</description>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <activemq.version>5.16.0</activemq.version>
+        <dependency.checker.active>true</dependency.checker.active>
+        <dependency.checker.failscore>4</dependency.checker.failscore>
+        <dependency.checker.src>src/main/dependency-check</dependency.checker.src>
+        <dependency.checker.updateVulnerabilityDB>true</dependency.checker.updateVulnerabilityDB>
+        <dependency.checker.output.folder>${basedir}/target</dependency.checker.output.folder>
+        <dependency-check.version>5.3.2</dependency-check.version>
+        <dependency.checker.goal>check</dependency.checker.goal>
+        <log4j2.version>2.13.3</log4j2.version>
+        <sonar.maven.plugin.version>3.7.0.1746</sonar.maven.plugin.version>
+    </properties>
+
+    <url>
+        https://gitlab.kazan.atosworldline.com/ap-payments-nonfunctional-testing/amq-jmx-api/blob/master/Readme.md
+    </url>
+
+    <scm>
+        <connection>
+            scm:git:https://gitlab.kazan.atosworldline.com/ap-payments-nonfunctional-testing/amq-jmx-api.git/
+        </connection>
+        <developerConnection>
+            scm:git:https://gitlab.kazan.atosworldline.com/ap-payments-nonfunctional-testing/amq-jmx-api.git/
+        </developerConnection>
+        <url>https://gitlab.kazan.atosworldline.com/ap-payments-nonfunctional-testing/amq-jmx-api</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>kazan-release-repo</id>
+            <name>Kazan Release</name>
+            <url>https://kazan.atosworldline.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>kazan-snapshot-repo</id>
+            <name>Kazan Snapshot</name>
+            <url>https://kazan.atosworldline.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-client-java</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20200518</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- versioned using an overridable version property to enable builds if NVD locations change -->
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check.version}</version>
+                    <configuration>
+                        <failBuildOnCVSS>${dependency.checker.failscore}</failBuildOnCVSS>
+                        <format>ALL</format>
+                        <autoUpdate>${dependency.checker.updateVulnerabilityDB}</autoUpdate>
+                        <outputDirectory>${dependency.checker.output.folder}</outputDirectory>
+                        <skipProvidedScope>true</skipProvidedScope>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>${dependency.checker.goal}</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Build stability: explicitly version the plugins in use -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.9.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar.maven.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-reactor-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <mainClass>com.equensworldline.jolokia.client.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-plugin-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requirePluginVersions>
+                                    <message>To improve build stability always use explicit plugin versions!</message>
+                                    <banLatest>true</banLatest>
+                                    <banRelease>true</banRelease>
+                                    <banSnapshots>true</banSnapshots>
+                                    <phases>clean,deploy,site</phases>
+                                    <additionalPlugins>
+                                        <additionalPlugin>org.apache.maven.plugins:maven-reactor-plugin</additionalPlugin>
+                                    </additionalPlugins>
+                                    <!-- do not check the versions of the Sonar-plugins as they depend purely on the versions installed on the CI-buildenvironment -->
+                                    <unCheckedPlugins>
+                                        <unCheckedPlugin>org.codehaus.sonar:sonar-maven-plugin</unCheckedPlugin>
+                                        <unCheckedPlugin>org.codehaus.sonar:sonar-maven3-plugin</unCheckedPlugin>
+                                        <unCheckedPlugin>org.codehaus.sonar-plugins.pdf-report:maven-pdfreport-plugin
+                                        </unCheckedPlugin>
+                                        <unCheckedPlugin>org.codehaus.sonar-plugins.pdf-report:sonarpdf-maven-plugin
+                                        </unCheckedPlugin>
+                                    </unCheckedPlugins>
+                                </requirePluginVersions>
+                                <requireMavenVersion>
+                                    <!-- AND-ed profile-activation criteria requires Maven 3.2.2+ -->
+                                    <!-- jar-no-fork for maven-source-plugin requires Maven 3.5.4+ -->
+                                    <level>ERROR</level>
+                                    <message>Maven's super-pom release-profile goal for the maven-source-plugin
+                                        was changed to the recommended jar-no-fork with 3.5.4 (MNG-5940). Building this project with
+                                        maven &lt; 3.5.4 will result in failing releases.
+                                    </message>
+                                    <version>3.5.4</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- include all the dependencies into the jar so it's easier to execute the example -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <!-- put your configurations here -->
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!-- Note: required to be named attach-sources else releases will fail due to release-profile of Maven
+                            Super POM which activates maven-source-plugin with an attach-sources ID-ed execution to include
+                            sources at release. Not naming this execution attach-sources or using a different goal
+                            (e.g. jar) results in sources being attached to the project twice (failing the release due
+                            to Nexus' no overwrite policy on releases repository)
+                        -->
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+    <profiles>
+        <!-- The following profile runs the dependency-check as part of the build with a suppressionFile
+        (active by default if src/main/dependency-check/filter.xml is present) -->
+        <profile>
+            <id>cvss-scan-filtered</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/main/dependency-check/filter.xml</exists>
+                </file>
+                <property>
+                    <name>dependency.checker.active</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>src/main/dependency-check/filter.xml</suppressionFile>
+                            </suppressionFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- The following profile runs the dependency-check as part of the build without a suppressionFile
+        (active by default on the build-server if src/main/dependency-check/filter.xml is missing) -->
+        <profile>
+            <id>cvss-scan-unfiltered</id>
+            <activation>
+                <file>
+                    <missing>${basedir}/src/main/dependency-check/filter.xml</missing>
+                </file>
+                <property>
+                    <name>dependency.checker.active</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
