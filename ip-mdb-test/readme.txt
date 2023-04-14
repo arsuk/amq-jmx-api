@@ -12,7 +12,7 @@ instantpayments_mybank_originator_payment_request queue and receive pacs.002 mes
 from an instantpayments_mybank_originator_payment_response queue it can send any text
 message types, simply use another template and define other queues.
 It is a JMS tool and can run with ActiveMQ or Artemis depending on the class definitions in the
-jndi.properties in the current directory or an alternative file specified with -properties..
+jndi.properties in the current directory or an alternative file specified with -properties.
 
 The command line is:
 
